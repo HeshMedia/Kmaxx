@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
+import Link from "next/link"
 
 export function Doctors() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -14,33 +15,39 @@ export function Doctors() {
       role: "Specialist",
       description: "Dedicated pediatrician providing expert care for children's health and well-being.",
       image:
-        "/static/images/D1.webp",
+        "/static/images/harsh.JPG",
+        
     },
     {
       name: "Dr Ashna Kumar",
       role: "Specialist",
       description: "Dedicated pediatrician providing expert care for children's health and well-being.",
       image:
-        "/static/images/D2.webp",
+        "/static/images/Ashna.PNG",
     },
     {
       name: "Dr Keshav",
       role: "Specialist",
       description: "Dedicated pediatrician providing expert care for children's health and well-being.",
       image:
-        "/static/images/D3.webp",
+        "/static/images/Keshav.PNG",
     },
     {
       name: "Dr Bharat",
       role: "Specialist",
       description: "Dedicated pediatrician providing expert care for children's health and well-being.",
       image:
-        "/static/images/D4.webp",
+        "/static/images/bharat.JPG",
     },
   ]
 
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="py-20 px-6 bg-[#fdf9f3]"
+      style={{
+        backgroundImage: "url('/static/images/back.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}>
       <div className="container mx-auto">
         <h2 className="text-5xl font-bold mb-16">
           THE TEAM OF <span className="text-[#FF9B62]">DOCTORS</span>
@@ -76,7 +83,9 @@ export function Doctors() {
           </button>
         </div>
         <div className="flex justify-center mt-12">
-          <Button className="bg-[#FF9B62] hover:bg-[#ff8a47] px-8">VIEW MORE</Button>
+          <Link href="/doctors">
+          <Button className="bg-[#FF9B62] hover:bg-[#ff8a47] p-8 rounded-full ">VIEW MORE</Button>
+          </Link>
         </div>
       </div>
     </section>

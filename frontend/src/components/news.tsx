@@ -6,7 +6,7 @@ import GalleryComponent from "./ui/gallery"
 
 export function News() {
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="py-20 px-6">
       <div className="container mx-auto">
         {/* Section Title */}
         <h2 className="text-5xl font-bold mb-12">

@@ -67,19 +67,20 @@ export function Header() {
             height={80} 
             className="h-12 w-auto"
           />
+          Kmax American Hospital
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/about" className="hover:text-[#FF9B62]">
+          <Link href="/about-us" className="hover:text-[#FF9B62]">
             About Us
           </Link>
           
           <div className="relative group">
-            <button className="hover:text-[#FF9B62] flex items-center gap-1">
+            <button className="hover:text-[#FF9B62] flex items-center gap-1 py-2">
               Services <ChevronDown className="h-4 w-4" />
             </button>
-            <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48">
+            <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
               <Link href="/services/cardiology" className="block p-2 hover:bg-gray-100 rounded">
                 Cardiology
               </Link>
@@ -97,10 +98,10 @@ export function Header() {
           </Link>
 
           <div className="relative group">
-            <button className="hover:text-[#FF9B62] flex items-center gap-1">
+            <button className="hover:text-[#FF9B62] flex items-center gap-1 py-2">
               Departments <ChevronDown className="h-4 w-4" />
             </button>
-            <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48">
+            <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
               <Link href="/departments/gynecology" className="block p-2 hover:bg-gray-100 rounded">
                 Gynecology
               </Link>
@@ -137,7 +138,7 @@ export function Header() {
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
             <div className="px-6 py-4 space-y-4">
-              <Link href="/about" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
+              <Link href="/about-us" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
                 About Us
               </Link>
 
