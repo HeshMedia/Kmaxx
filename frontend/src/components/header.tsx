@@ -107,7 +107,7 @@ export function Header() {
             </div>
           </div>
 
-          <Link href="/cdc" className="hover:text-[#FF9B62]">
+          <Link href="/departments/child-development" className="hover:text-[#FF9B62]">
             CDC
           </Link>
           
@@ -166,7 +166,7 @@ export function Header() {
                 )}
               </div>
 
-              <Link href="/cdc" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
+              <Link href="/departments/child-development" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
                 CDC
               </Link>
               

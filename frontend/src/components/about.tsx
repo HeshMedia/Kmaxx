@@ -28,8 +28,8 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* Right Image Grid */}
-        <div className="grid grid-cols-3 grid-rows-2 gap-2 sm:gap-4">
+        {/* Right Image Grid - Hidden on small screens */}
+        <div className="hidden md:grid grid-cols-3 grid-rows-2 gap-2 sm:gap-4">
           <div className="row-span-2">
             <img
               src="static/images/4.jpg"
