@@ -30,11 +30,11 @@ export function Doctors() {
           THE TEAM OF <span className="text-[#FF9B62]">DOCTORS</span>
         </h2>
 
-        <div className="relative">
+        <div className="relative ">
           {/* Scrollable Row */}
           <div
             ref={scrollRef}
-            className="flex gap-6 no-scrollbar scroll-smooth"
+            className="flex gap-6 no-scrollbar scroll-smooth overflow-x-auto pb-9"
           >
             {doctors.map((doctor, index) => (
               <Link
