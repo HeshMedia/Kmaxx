@@ -22,15 +22,17 @@ interface GalleryProps {
 
 function Gallery({ items, setIndex, setOpen, index }: GalleryProps) {
     return (
-        <div className="rounded-md w-fit mx-auto md:gap-2 gap-1 flex pb-20 pt-10 ">
+        <div className="rounded-md w-fit mx-auto md:gap-2 gap-1 flex pb-20 pt-10">
             {items.slice(0, 3).map((item, i) => {
                 return (
                     <React.Fragment key={item.id}>
                         <motion.img
                             whileTap={{ scale: 0.95 }}
                             className={`rounded-2xl ${
-                                index === i ? "w-[350px] " : "xl:w-[70px] md:w-[50px] sm:w-[40px] w-[30px]"
-                            } h-[300px] flex-shrink-0 object-cover transition-[width] ease-in-out duration-300`}
+                                index === i
+                                    ? "w-[250px] sm:w-[300px] md:w-[350px]"
+                                    : "xl:w-[70px] md:w-[50px] sm:w-[40px] w-[30px]"
+                            } h-[200px] sm:h-[250px] md:h-[300px] flex-shrink-0 object-cover transition-[width] ease-in-out duration-300`}
                             onMouseEnter={() => {
                                 setIndex(i)
                             }}
@@ -91,7 +93,10 @@ export default function GalleryComponent() {
                         }}
                     >
                         <div onClick={(e) => e.stopPropagation()}>
-                            <motion.div layoutId={items[index].id} className="w-[500px] h-[500px] rounded-2xl cursor-default">
+                            <motion.div
+                                layoutId={items[index].id}
+                                className="w-[90vw] max-w-[500px] h-[90vw] max-h-[500px] rounded-2xl cursor-default"
+                            >
                                 <Image
                                     src={items[index].url || "/placeholder.svg"}
                                     width={500}

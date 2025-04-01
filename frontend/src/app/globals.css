@@ -66,18 +66,26 @@
   }
 
   /* Hex pattern background */
-.hex-pattern {
-  background-image: radial-gradient(#fcae91 1px, transparent 1px),
-    radial-gradient(#fcae91 1px, transparent 1px);
-  background-position: 0 0, 10px 10px;
-  background-size: 20px 20px;
-  opacity: 0.3;
+  .hex-pattern {
+    background-image:
+      radial-gradient(#fcae91 1px, transparent 1px),
+      radial-gradient(#fcae91 1px, transparent 1px);
+    background-position:
+      0 0,
+      10px 10px;
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
-
-}
-
-
-
 
 @layer base {
   * {
@@ -88,8 +96,6 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -99,3 +105,13 @@
   }
 }
 
+@layer base {
+  img, video {
+    max-width: unset;
+    height: unset;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-oswald), sans-serif;
+}

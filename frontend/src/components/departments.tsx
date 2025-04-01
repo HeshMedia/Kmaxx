@@ -1,6 +1,12 @@
 "use client";
 
-import { Brain, Heart, Stethoscope, Syringe, UniversityIcon as UterusIcon } from "lucide-react";
+import {
+  Brain,
+  Heart,
+  Stethoscope,
+  Syringe,
+  UniversityIcon as UterusIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -43,8 +49,8 @@ export function Departments() {
           {departments.map((dept, index) => (
             <Link key={index} href={`/departments/${dept.slug}`} className="group">
               <div className="flex flex-col items-center cursor-pointer transition-transform hover:scale-105">
-                <div className="w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full bg-[#FF9B62] flex items-center justify-center mb-3 md:mb-4">
-                  <dept.icon className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 text-white transition-transform group-hover:scale-110" />
+                <div className="w-24 h-24 sm:w-24 sm:h-24 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full bg-[#FF9B62] flex items-center justify-center mb-3 md:mb-4">
+                  <dept.icon className="w-14 h-14 sm:w-14 sm:h-14 md:w-14 md:h-14 lg:w-16 lg:h-16 text-white transition-transform group-hover:scale-110" />
                 </div>
                 <h3 className="text-base md:text-lg lg:text-xl font-semibold text-center group-hover:text-[#FF9B62] transition-colors">
                   {dept.name}

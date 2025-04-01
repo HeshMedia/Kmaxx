@@ -17,8 +17,37 @@ export function Contact() {
     >
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row gap-12">
-          {/* Contact Form */}
-          <div className="w-full md:w-1/2">
+          {/* Contact Information — appears first on mobile, second on desktop */}
+          <div className="w-full md:w-1/2 order-1 md:order-2">
+            <h2 className="text-4xl sm:text-5xl font-bold text-[#6B87E8] mb-6 sm:mb-8">CONTACT US</h2>
+            <p className="text-base sm:text-lg mb-10 max-w-md">
+              Contact us for questions, technical assistance, or collaboration opportunities via the contact information
+              provided.
+            </p>
+            <div className="space-y-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
+                  <Phone className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-base sm:text-lg">+91 9501411935</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-base sm:text-lg">helpdesk@kmaxx.in</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
+                  <MapPin className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-base sm:text-lg">355 Mall Road, Amritsar</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form — appears second on mobile, first on desktop */}
+          <div className="w-full md:w-1/2 order-2 md:order-1">
             <form className="space-y-6">
               <div>
                 <label htmlFor="name" className="text-lg">
@@ -49,37 +78,9 @@ export function Contact() {
               <Button className="bg-[#FF9B62] hover:bg-[#ff8a47] w-32">SUBMIT</Button>
             </form>
           </div>
-
-          {/* Contact Information */}
-          <div className="w-full md:w-1/2">
-            <h2 className="text-5xl font-bold text-[#6B87E8] mb-8">CONTACT US</h2>
-            <p className="text-lg mb-12 max-w-md">
-              Contact us for questions, technical assistance, or collaboration opportunities via the contact information
-              provided.
-            </p>
-            <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
-                  <Phone className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-lg">+91 9501411935</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
-                  <Mail className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-lg">helpdesk@kmaxx.in</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
-                  <MapPin className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-lg">355 Mall Road, Amritsar</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+
       {/* Decorative Background Pattern */}
       <div className="absolute bottom-0 right-0 grid grid-cols-5 gap-4 text-pink-200 opacity-20">
         {Array.from({ length: 15 }).map((_, i) => (

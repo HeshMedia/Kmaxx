@@ -67,11 +67,13 @@ export function Header() {
             height={80} 
             className="h-12 w-auto"
           />
-          Kmax American Hospital
+          <h1 className="text-2xl font-bold text-[#FF9B62] ml-2">
+          Kmaxx  <span  className="text-blue-500" >American Hospital</span>
+          </h1>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-6 gap-10">
           <Link href="/about-us" className="hover:text-[#FF9B62]">
             About Us
           </Link>
@@ -81,13 +83,13 @@ export function Header() {
               Services <ChevronDown className="h-4 w-4" />
             </button>
             <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
-              <Link href="/services/cardiology" className="block p-2 hover:bg-gray-100 rounded">
+              <Link href="/departments/cardiology" className="block p-2 hover:bg-gray-100 rounded">
                 Cardiology
               </Link>
-              <Link href="/services/neurology" className="block p-2 hover:bg-gray-100 rounded">
+              <Link href="/departments/neurology" className="block p-2 hover:bg-gray-100 rounded">
                 Neurology
               </Link>
-              <Link href="/services/pediatrics" className="block p-2 hover:bg-gray-100 rounded">
+              <Link href="/departments/child-development" className="block p-2 hover:bg-gray-100 rounded">
                 Pediatrics
               </Link>
             </div>
