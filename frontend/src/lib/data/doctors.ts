@@ -30,7 +30,7 @@ export const doctors = [
       name: "Dr Keshav Mehra",
       slug: "keshav-mehra",
       role: "Paediatrician",
-      image: "/static/images/Keshav.PNG",
+      image: "/static/images/keshav.png",
       bio: `Dedicated pediatrician providing expert care for children's health and well-being. Dr. Keshav Mehra is a key contributor to the pediatric unit at Kmaxx American Hospital. With a strong background in treating a wide spectrum of childhood illnesses, Dr. Mehra brings both knowledge and empathy to every consultation. He is deeply involved in health education and preventive programs aimed at building healthier communities.`,
       description:
       "Dedicated pediatrician providing expert care for children's health and well-being.",

@@ -37,22 +37,26 @@ export function Header() {
         </div>
         
         <div className="flex items-center space-x-4">
-          <Link href="#" className="hidden md:inline">
+            <Link 
+            href="#contact" 
+            className="hidden md:inline"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            >
             Book Appointment
-          </Link>
-          <div className="flex items-center space-x-2">
-            <Link href="#" className="hover:text-gray-200">
-              <Facebook className="h-5 w-5" />
             </Link>
-            <Link href="#" className="hover:text-gray-200">
+          <div className="flex items-center space-x-2">
+            <Link href="https://www.instagram.com/kmaxxamericanhospital?igsh=MXZjaXB4N3FzNzIwdQ==" className="hover:text-gray-200">
               <Instagram className="h-5 w-5" />
             </Link>
-            <Link href="#" className="hover:text-gray-200">
-              <Youtube className="h-5 w-5" />
-            </Link>
-            <Link href="#" className="hover:text-gray-200">
-              <X className="h-5 w-5" />
-            </Link>
+          
+            {/* <Link href="#" className="hover:text-gray-200">
+              <Google className="h-5 w-5" />
+            </Link> */}
+          
+            
           </div>
         </div>
       </div>
@@ -68,32 +72,19 @@ export function Header() {
             className="h-12 w-auto"
           />
           <h1 className="text-2xl font-bold text-[#FF9B62] ml-2">
-          Kmaxx  <span  className="text-blue-500" >American Hospital</span>
+          KMAXX  <span  className="text-blue-500" >AMERICAN HOSPITAL</span>
           </h1>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6 gap-10">
+          <Link href="/" className="hover:text-[#FF9B62]">
+            Home
+          </Link>
+
           <Link href="/about-us" className="hover:text-[#FF9B62]">
             About Us
           </Link>
-          
-          <div className="relative group">
-            <button className="hover:text-[#FF9B62] flex items-center gap-1 py-2">
-              Services <ChevronDown className="h-4 w-4" />
-            </button>
-            <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
-              <Link href="/departments/cardiology" className="block p-2 hover:bg-gray-100 rounded">
-                Cardiology
-              </Link>
-              <Link href="/departments/neurology" className="block p-2 hover:bg-gray-100 rounded">
-                Neurology
-              </Link>
-              <Link href="/departments/child-development" className="block p-2 hover:bg-gray-100 rounded">
-                Pediatrics
-              </Link>
-            </div>
-          </div>
 
           <Link href="/doctors" className="hover:text-[#FF9B62]">
             Doctors

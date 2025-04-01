@@ -65,9 +65,9 @@ export const departments = {
       ],
       doctor: {
         name: "Dr Manpreet Kaur",
-        image: "/static/images/manpreet.png",
+        image: "/static/images/manpreet.JPG",
       },
-      image: "/static/images/2..jpg",
+      image: "/static/images/gyno.jpg",
     },
     "child-development": {
       name: "Child Development",
@@ -97,10 +97,10 @@ export const departments = {
         "Feeding Difficulties",
       ],
       doctor: {
-        name: "Dr Yukti Gupta",
-        image: "/static/images/yukti.png",
+        name: "Mrs Shikha Arora", 
+        image: "/static/images/sikha.PNG",
       },
-      image: "/static/images/child-dev-banner.jpg",
+      image: "/static/images/1.jpg",
     },
     "general-surgery": {
       name: "General Surgery",
@@ -131,9 +131,9 @@ export const departments = {
       ],
       doctor: {
         name: "Dr Anuj Ved Gupta",
-        image: "/static/images/anuj.png",
+        image: "/static/images/anug.JPG",
       },
-      image: "/static/images/general-surgery-banner.jpg",
+      image: "/static/images/1.jpg",
     },
     cardiology: {
       name: "Cardiology",
@@ -163,10 +163,10 @@ export const departments = {
         "Congenital Heart Disease",
       ],
       doctor: {
-        name: "Dr Bharat Mehra",
-        image: "/static/images/bharat.JPG",
+        name: "Dr Anuj Ved Gupta",
+        image: "/static/images/anug.JPG",
       },
-      image: "/static/images/cardio-banner.jpg",
+      image: "/static/images/cydo.jpg",
     },
   } as const;
   

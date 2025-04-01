@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 export function Contact() {
   return (
-    <section
+    <section id="contact"
       className="relative py-20 px-6 bg-white overflow-hidden flex justify-center items-center"
       style={{
         backgroundImage: "url('/static/images/back.png')",

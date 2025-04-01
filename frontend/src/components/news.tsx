@@ -27,7 +27,7 @@ export function News() {
     <section className="py-20 px-6">
       <div className="container mx-auto">
         {/* Section Title */}
-        <h2 className="text-6xl font-bold mb-12">
+        <h2 className="text-6xl font-bold mb-12 pl-6">
           OUR <span className="text-[#FF9B62]">NEWS</span>
         </h2>
 

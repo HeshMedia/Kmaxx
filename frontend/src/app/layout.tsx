@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { Inter, Oswald } from 'next/font/google';
+import { Inter, Oswald ,Open_Sans } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,6 +13,11 @@ const inter = Inter({
 const oswald = Oswald({
   subsets: ['latin'],
   variable: '--font-oswald',
+});
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  variable: '--font-open-sans',
 });
 
 
@@ -29,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body  className={`${inter.variable} ${oswald.variable}`}>
+      <body  className={`${inter.variable} ${oswald.variable} ${openSans.variable}`}>
         <Header />
         {children}
         <Footer />

@@ -12,6 +12,7 @@ const config: Config = {
 		fontFamily: {
 			body: ['var(--font-inter)'], // For all body text
 			heading: ['var(--font-oswald)'], // For headings
+      heading1: ['var(--font-open-sans)'],
 		  },
       colors: {
         background: "hsl(var(--background))",

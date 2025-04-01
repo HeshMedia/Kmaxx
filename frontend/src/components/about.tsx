@@ -18,7 +18,7 @@ const AboutUs = () => {
               doorstep. Our commitment is to provide unique services, making us a
               trusted name in healthcare excellence.
             </p>
-            <div className="absolute -top-8 right-8 w-24 h-24 md:w-32 md:h-32 overflow-hidden">
+            <div className="absolute -top-12 right-8 w-24 h-24 md:w-32 md:h-32 overflow-hidden">
               <img
                 src="/static/images/3.jpg"
                 alt="Doctors Group"

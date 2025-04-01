@@ -24,13 +24,7 @@ export function Doctors() {
 
   return (
     <section
-      className="py-20 px-6 bg-[#fdf9f3]"
-      style={{
-        backgroundImage: "url('/static/images/back.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+      className="py-20 px-6 bg-[#fdf9f3]"    >
       <div className="container mx-auto">
         <h2 className="text-5xl font-bold mb-16">
           THE TEAM OF <span className="text-[#FF9B62]">DOCTORS</span>
@@ -40,7 +34,7 @@ export function Doctors() {
           {/* Scrollable Row */}
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth"
+            className="flex gap-6 no-scrollbar scroll-smooth"
           >
             {doctors.map((doctor, index) => (
               <Link
