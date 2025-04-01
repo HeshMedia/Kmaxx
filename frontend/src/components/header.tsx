@@ -24,7 +24,7 @@ export function Header() {
   return (
     <header className="w-full">
       {/* Top Contact Bar */}
-      <div className="bg-[#FF9B62] text-white py-2 px-4 flex flex-col md:flex-row justify-between items-center text-sm">
+      <div className="bg-[#FF9B62] text-white py-2 px-4 flex  md:flex-row justify-between items-center text-sm">
         <div className="flex items-center space-x-4 mb-2 md:mb-0">
           <div className="flex items-center">
             <Phone className="h-4 w-4 mr-2" />
@@ -131,38 +131,19 @@ export function Header() {
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
             <div className="px-6 py-4 space-y-4">
+              <Link href="/" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
+               Home
+              </Link>
+              
               <Link href="/about-us" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
                 About Us
               </Link>
-
-              <div className="border-b">
-                <button 
-                  onClick={toggleServices}
-                  className="w-full flex justify-between items-center py-2 hover:text-[#FF9B62]"
-                >
-                  Services
-                  {isServicesOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-                </button>
-                {isServicesOpen && (
-                  <div className="pl-4 pb-2 space-y-2">
-                    <Link href="/services/cardiology" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Cardiology
-                    </Link>
-                    <Link href="/services/neurology" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Neurology
-                    </Link>
-                    <Link href="/services/pediatrics" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Pediatrics
-                    </Link>
-                  </div>
-                )}
-              </div>
 
               <Link href="/doctors" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
                 Doctors
               </Link>
 
-              <div className="border-b">
+              <div >
                 <button 
                   onClick={toggleDepartments}
                   className="w-full flex justify-between items-center py-2 hover:text-[#FF9B62]"
