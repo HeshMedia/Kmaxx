@@ -1,6 +1,27 @@
 import React from "react";
+import { getHomeAbout } from "@/lib/sanity";
 
-const AboutUs = () => {
+interface HomeAboutProps {
+  title?: string;
+  description?: string;
+}
+
+const AboutUs = async () => {
+  let aboutData;
+  
+  try {
+    aboutData = await getHomeAbout();
+    console.log("Home about component received data:", aboutData);
+  } catch (error) {
+    console.error("Error in AboutUs component:", error);
+    aboutData = null;
+  }
+  
+  const content: HomeAboutProps = {
+    title: aboutData?.title || "ABOUT US",
+    description: aboutData?.description || "KMAXX American Hospital, located in Amritsar, brings cutting-edge American technology and exceptional healthcare services to your doorstep. Our commitment is to provide unique services, making us a trusted name in healthcare excellence."
+  };
+
   return (
     <section className="bg-[#fdf9f3] py-12 px-4 md:px-16">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -10,13 +31,7 @@ const AboutUs = () => {
           <div className="bg-[#FF9B62] text-white p-6 sm:p-8 md:p-10 shadow-lg relative pt-4 pl-4 h-auto md:h-[500px] w-full max-w-md">
             <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold">US</h3>
             <p className="mt-4 text-base sm:text-lg">
-              KMAXX American Hospital, located in Amritsar, brings cutting-edge
-              American technology and exceptional healthcare services to your
-              doorstep. Our commitment is to provide unique services, making us a
-              trusted name in healthcare excellence.KMAXX American Hospital, located in Amritsar, brings cutting-edge
-              American technology and exceptional healthcare services to your
-              doorstep. Our commitment is to provide unique services, making us a
-              trusted name in healthcare excellence.
+              {content.description}
             </p>
             <div className="absolute -top-10 sm:-top-12 right-4 sm:right-6 md:right-8 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 overflow-hidden">
               <img

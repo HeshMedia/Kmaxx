@@ -24,17 +24,43 @@ export const doctorType = defineType({
       type: 'image',
     }),
     defineField({
+      name: 'role',
+      title: 'Specialization/Role',
+      type: 'string',
+    }),
+    defineField({
       name: 'description',
       type: 'array',
       of: [{type: 'block'}],
     }),
     defineField({
-      name: 'specialization',
-      type: 'text',
+      name: 'bio',
+      title: 'Detailed Biography',
+      type: 'array',
+      of: [{type: 'block'}],
     }),
     defineField({
-      name: 'experience',
+      name: 'order',
+      title: 'Display Order',
       type: 'number',
+      description: 'Lower numbers appear first in listings',
+      validation: (rule) => rule.integer().positive(),
+      initialValue: 10,
     }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'role',
+      media: 'image',
+      order: 'order',
+    },
+    prepare({title, subtitle, media, order}) {
+      return {
+        title,
+        subtitle: `${subtitle}${order ? ` (Order: ${order})` : ''}`,
+        media,
+      }
+    }
+  }
 })

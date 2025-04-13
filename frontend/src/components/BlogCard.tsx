@@ -1,7 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function BlogCard({ blog }: any) {
+interface BlogCardProps {
+  blog: {
+    slug: string;
+    title: string;
+    excerpt: string;
+    image: string;
+    author: string;
+    publishedAt: string;
+  }
+}
+
+export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link href={`/blogs/${blog.slug}`}>
       <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all overflow-hidden">
@@ -10,7 +21,7 @@ export default function BlogCard({ blog }: any) {
           <h2 className="text-xl font-semibold mb-1">{blog.title}</h2>
           <p className="text-gray-600 text-sm line-clamp-2">{blog.excerpt}</p>
           <div className="text-xs text-gray-500 mt-2">
-            By {blog.author} • {new Date(blog.date).toLocaleDateString()}
+            By {blog.author} • {new Date(blog.publishedAt).toLocaleDateString()}
           </div>
         </div>
       </div>

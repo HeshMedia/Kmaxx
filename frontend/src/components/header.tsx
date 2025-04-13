@@ -1,15 +1,42 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Phone, Facebook, Instagram, Youtube, Menu, X, ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getNavbarDepartments } from "@/lib/sanity"
+
+interface Department {
+  _id: string;
+  name: string;
+  slug: string;
+}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false)
+  const [departments, setDepartments] = useState<Department[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Fetch departments for the navbar
+  useEffect(() => {
+    async function loadDepartments() {
+      try {
+        setIsLoading(true)
+        const deptData = await getNavbarDepartments()
+        setDepartments(deptData || [])
+      } catch (error) {
+        console.error("Error loading departments:", error)
+        setDepartments([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadDepartments()
+  }, [])
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const toggleServices = () => setIsServicesOpen(!isServicesOpen)
@@ -90,22 +117,24 @@ export function Header() {
             Doctors
           </Link>
 
-          <div className="relative group">
-            <button className="hover:text-[#FF9B62] flex items-center gap-1 py-2">
-              Departments <ChevronDown className="h-4 w-4" />
-            </button>
-            <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
-              <Link href="/departments/gynecology" className="block p-2 hover:bg-gray-100 rounded">
-                Gynecology
-              </Link>
-              <Link href="/departments/neurology" className="block p-2 hover:bg-gray-100 rounded">
-                Neurology
-              </Link>
-              <Link href="/departments/cardiology" className="block p-2 hover:bg-gray-100 rounded">
-                Cardiology
-              </Link>
+          {departments.length > 0 && (
+            <div className="relative group">
+              <button className="hover:text-[#FF9B62] flex items-center gap-1 py-2">
+                Departments <ChevronDown className="h-4 w-4" />
+              </button>
+              <div className="absolute top-full -left-2 hidden group-hover:block bg-white shadow-lg rounded-lg p-4 w-48 z-50">
+                {departments.map((dept) => (
+                  <Link 
+                    key={dept._id}
+                    href={`/departments/${dept.slug}`} 
+                    className="block p-2 hover:bg-gray-100 rounded"
+                  >
+                    {dept.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <Link href="/departments/child-development" className="hover:text-[#FF9B62]">
             CDC
@@ -143,28 +172,31 @@ export function Header() {
                 Doctors
               </Link>
 
-              <div >
-                <button 
-                  onClick={toggleDepartments}
-                  className="w-full flex justify-between items-center py-2 hover:text-[#FF9B62]"
-                >
-                  Departments
-                  {isDepartmentsOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-                </button>
-                {isDepartmentsOpen && (
-                  <div className="pl-4 pb-2 space-y-2">
-                    <Link href="/departments/gynecology" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Gynecology
-                    </Link>
-                    <Link href="/departments/neurology" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Neurology
-                    </Link>
-                    <Link href="/departments/cardiology" className="block py-1 hover:text-[#FF9B62]" onClick={closeMenu}>
-                      Cardiology
-                    </Link>
-                  </div>
-                )}
-              </div>
+              {departments.length > 0 && (
+                <div>
+                  <button 
+                    onClick={toggleDepartments}
+                    className="w-full flex justify-between items-center py-2 hover:text-[#FF9B62]"
+                  >
+                    Departments
+                    {isDepartmentsOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  </button>
+                  {isDepartmentsOpen && (
+                    <div className="pl-4 pb-2 space-y-2">
+                      {departments.map((dept) => (
+                        <Link 
+                          key={dept._id}
+                          href={`/departments/${dept.slug}`} 
+                          className="block py-1 hover:text-[#FF9B62]" 
+                          onClick={closeMenu}
+                        >
+                          {dept.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <Link href="/departments/child-development" className="block py-2 hover:text-[#FF9B62]" onClick={closeMenu}>
                 CDC

@@ -1,20 +1,21 @@
-
 import { Hero } from "@/components/hero"
-import { Departments } from "@/components/departments"
-import  About  from "@/components/about"
+import AboutUs from "@/components/about"
 import { Doctors } from "@/components/doctors"
-import { News } from "@/components/news"
 import { Contact } from "@/components/contact"
+import { NewsAndGallerySection, DepartmentsSection } from "./home-sections"
 
+// Add revalidation to refresh content periodically
+export const revalidate = 60
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#fdf9f3]">
+
       <Hero />
-      <About />
+      <AboutUs />
       <Doctors />
-      <Departments />
-      <News />
+      <DepartmentsSection />
+      <NewsAndGallerySection />
       <Contact />
     </main>
   )

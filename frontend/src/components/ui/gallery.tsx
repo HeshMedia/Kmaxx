@@ -1,62 +1,92 @@
 "use client"
 
-import React, { useEffect } from "react"
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { items } from "@/components/ui/constant"
 
-interface Item {
-    id: string;
-    url: string;
+interface GalleryItem {
+    _id: string;
     title: string;
+    image: string;
     description: string;
+    order?: number;
 }
 
-interface GalleryProps {
-    items: Item[];
+function Gallery({ 
+    items,
+    index,
+    setIndex,
+    setOpen
+}: {
+    items: GalleryItem[];
+    index: number;
     setIndex: (index: number) => void;
     setOpen: (open: boolean) => void;
-    index: number;
-}
+}) {
+    // Safety check to ensure we're not working with an empty array
+    if (!items || items.length === 0) {
+        return (
+            <div className="text-center py-10">
+                <p className="text-gray-500">No gallery items available</p>
+            </div>
+        );
+    }
 
-function Gallery({ items, setIndex, setOpen, index }: GalleryProps) {
+    // Ensure our index is in bounds
+    const safeIndex = Math.min(index, items.length - 1);
+    
+    // Create a safe copy for rendering - log the items being rendered for debugging
+    const displayItems = items.slice(0, Math.min(11, items.length));
+    console.log(`Gallery display items (${displayItems.length}):`, displayItems);
+    
     return (
         <div className="rounded-md w-fit mx-auto md:gap-2 gap-1 flex pb-20 pt-10">
-            {items.slice(0, 3).map((item, i) => {
-                return (
-                    <React.Fragment key={item.id}>
-                        <motion.img
-                            whileTap={{ scale: 0.95 }}
-                            className={`rounded-2xl ${
-                                index === i
-                                    ? "w-[250px] sm:w-[300px] md:w-[350px]"
-                                    : "xl:w-[70px] md:w-[50px] sm:w-[40px] w-[30px]"
-                            } h-[200px] sm:h-[250px] md:h-[300px] flex-shrink-0 object-cover transition-[width] ease-in-out duration-300`}
-                            onMouseEnter={() => {
-                                setIndex(i)
-                            }}
-                            onMouseLeave={() => {
-                                setIndex(i)
-                            }}
-                            onClick={() => {
-                                setIndex(i)
-                                setOpen(true)
-                            }}
-                            src={item?.url}
-                            layoutId={item.id}
-                            alt={item.title}
-                        />
-                    </React.Fragment>
-                )
-            })}
+            {displayItems.map((item, i) => (
+                <motion.div
+                    key={item._id}
+                    whileTap={{ scale: 0.95 }}
+                    className={`rounded-2xl ${
+                        index === i
+                            ? "w-[250px]"
+                            : "xl:w-[50px] md:w-[30px] sm:w-[20px] w-[14px]"
+                    } h-[200px] flex-shrink-0 overflow-hidden transition-[width] ease-in-out duration-300`}
+                    onMouseEnter={() => setIndex(i)}
+                    onMouseLeave={() => setIndex(i)}
+                    onClick={() => {
+                        setIndex(i);
+                        setOpen(true);
+                    }}
+                    layoutId={item._id}
+                >
+                    <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                            console.error("Failed to load gallery image:", item.image);
+                            e.currentTarget.src = "/static/images/placeholder.jpg";
+                        }}
+                    />
+                </motion.div>
+            ))}
         </div>
-    )
+    );
 }
 
-export default function GalleryComponent() {
+export default function GalleryComponent({ items = [] }: { items?: GalleryItem[] }) {
     const [index, setIndex] = useState(0)
     const [open, setOpen] = useState(false)
+    
+    // Make sure items is always an array
+    const safeItems = Array.isArray(items) ? items : items ? [items] : [];
+    
+    // Log the items received for debugging
+    useEffect(() => {
+        console.log("Gallery component received items:", safeItems);
+        if (safeItems.length > 0) {
+            console.log("First gallery item:", safeItems[0]);
+        }
+    }, [safeItems]);
 
     useEffect(() => {
         if (open) {
@@ -65,7 +95,7 @@ export default function GalleryComponent() {
             document.body.classList.remove("overflow-hidden")
         }
 
-        const handleKeyDown = (event: { key: string }) => {
+        const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
                 setOpen(false)
             }
@@ -74,14 +104,29 @@ export default function GalleryComponent() {
         document.addEventListener("keydown", handleKeyDown)
         return () => {
             document.removeEventListener("keydown", handleKeyDown)
+            document.body.classList.remove("overflow-hidden")
         }
     }, [open])
 
+    // If there are no items, show a placeholder
+    if (safeItems.length === 0) {
+        return (
+            <div className="text-center py-4">
+                <p className="text-gray-500">No gallery items available</p>
+            </div>
+        )
+    }
+
     return (
         <div className="relative">
-            <Gallery items={items} index={index} setIndex={setIndex} setOpen={setOpen} />
+            <Gallery
+                items={safeItems}
+                index={index}
+                setIndex={setIndex}
+                setOpen={setOpen}
+            />
             <AnimatePresence>
-                {open !== false && (
+                {open !== false && safeItems.length > 0 && index < safeItems.length && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -94,17 +139,21 @@ export default function GalleryComponent() {
                     >
                         <div onClick={(e) => e.stopPropagation()}>
                             <motion.div
-                                layoutId={items[index].id}
-                                className="w-[90vw] max-w-[500px] h-[90vw] max-h-[500px] rounded-2xl cursor-default"
+                                layoutId={safeItems[index]._id}
+                                className="w-[400px] h-[400px] rounded-2xl cursor-default"
                             >
-                                <Image
-                                    src={items[index].url || "/placeholder.svg"}
-                                    width={500}
-                                    height={500}
-                                    alt={items[index].title}
-                                    className="rounded-2xl h-full w-full object-cover"
-                                />
-                                <article className="dark:bg-base-dark bg-white rounded-md p-2 mt-2 border ">
+                                <div className="relative w-full h-full">
+                                    <img
+                                        src={safeItems[index].image}
+                                        alt={safeItems[index].title}
+                                        className="rounded-2xl h-full w-full object-cover"
+                                        onError={(e) => {
+                                            console.error("Failed to load gallery detail image:", safeItems[index].image);
+                                            e.currentTarget.src = "/static/images/placeholder.jpg";
+                                        }}
+                                    />
+                                </div>
+                                <article className="dark:bg-base-dark bg-white rounded-md p-2 mt-2 border">
                                     <motion.h1
                                         initial={{ scaleY: 0.2 }}
                                         animate={{ scaleY: 1 }}
@@ -112,7 +161,7 @@ export default function GalleryComponent() {
                                         transition={{ duration: 0.2, delay: 0.2 }}
                                         className="text-xl font-semibold"
                                     >
-                                        {items[index].title}
+                                        {safeItems[index].title}
                                     </motion.h1>
                                     <motion.p
                                         initial={{ y: -10, opacity: 0 }}
@@ -121,7 +170,7 @@ export default function GalleryComponent() {
                                         transition={{ duration: 0.2, delay: 0.2 }}
                                         className="text-sm leading-[100%] py-2"
                                     >
-                                        {items[index].description}
+                                        {safeItems[index].description}
                                     </motion.p>
                                 </article>
                             </motion.div>

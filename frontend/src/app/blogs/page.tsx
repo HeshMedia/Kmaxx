@@ -1,8 +1,29 @@
 import Image from "next/image";
 import BlogCard from "@/components/BlogCard";
-import { blogs } from "@/lib/data/blogs";
+import { getBlogs } from "@/lib/sanity";
 
-export default function BlogsPage() {
+export const revalidate = 60; // Revalidate the page every 60 seconds
+
+interface Blog {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  author: string;
+  publishedAt: string;
+  tags?: string[];
+}
+
+export default async function BlogsPage() {
+  let blogs: Blog[] = [];
+  
+  try {
+    blogs = await getBlogs() as Blog[];
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    // We'll show an empty list if there's an error
+  }
+  
   return (
     <div className="bg-[#FFF8F3] min-h-screen">
       {/* Banner */}
@@ -26,9 +47,15 @@ export default function BlogsPage() {
 
       {/* Blog Grid */}
       <div className="max-w-6xl mx-auto px-4 py-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog) => (
-          <BlogCard key={blog.slug} blog={blog} />
-        ))}
+        {blogs.length > 0 ? (
+          blogs.map((blog: Blog) => (
+            <BlogCard key={blog.slug} blog={blog} />
+          ))
+        ) : (
+          <div className="col-span-3 text-center py-8">
+            <p className="text-gray-600">No blog posts available at the moment.</p>
+          </div>
+        )}
       </div>
     </div>
   );
