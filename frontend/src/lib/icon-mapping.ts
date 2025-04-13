@@ -13,7 +13,7 @@ export function getIconByName(name: string): LucideIcon {
     .join('');
   
   // Check if the icon exists in Lucide
-  const IconComponent = (LucideIcons as Record<string, LucideIcon>)[pascalCaseName];
+  const IconComponent = LucideIcons[pascalCaseName as keyof typeof LucideIcons] as LucideIcon;
   
   return IconComponent || defaultIcon;
 } 
