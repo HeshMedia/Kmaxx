@@ -14,15 +14,34 @@ export const client = createClient({
 
 // Make queries to fetch content data
 export async function getDoctors() {
-  return client.fetch(`*[_type == "doctors"] | order(order asc) {
-    _id,
-    name,
-    "slug": slug.current,
-    "image": image.asset->url,
-    role,
-    description,
-    order
-  }`)
+  console.log("Fetching doctors...");
+  try {
+    console.log("Sanity config:", JSON.stringify({
+      projectId: sanityConfig.projectId,
+      dataset: sanityConfig.dataset,
+      apiVersion: sanityConfig.apiVersion,
+    }));
+    
+    const query = `*[_type == "doctors"] | order(order asc) {
+      _id,
+      name,
+      "slug": slug.current,
+      "image": image.asset->url,
+      role,
+      description,
+      order
+    }`;
+    
+    console.log("Doctor query:", query);
+    const result = await client.fetch(query);
+    console.log("Doctors fetch result:", JSON.stringify(result).substring(0, 200) + "...");
+    console.log("Number of doctors found:", result ? result.length : 0);
+    
+    return result;
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    throw error; // Re-throw to make the error visible in the UI
+  }
 }
 
 // Department queries
@@ -144,14 +163,28 @@ export async function getAboutPage() {
 }
 
 export async function getDoctorBySlug(slug: string) {
-  return client.fetch(`*[_type == "doctors" && slug.current == $slug][0] {
-    name,
-    "slug": slug.current,
-    "image": image.asset->url,
-    role,
-    description,
-    bio
-  }`, { slug })
+  console.log(`Fetching doctor with slug: ${slug}...`);
+  try {
+    const query = `*[_type == "doctors" && slug.current == $slug][0] {
+      name,
+      "slug": slug.current,
+      "image": image.asset->url,
+      role,
+      description,
+      bio
+    }`;
+    
+    console.log("Doctor by slug query:", query);
+    console.log("Query parameters:", { slug });
+    
+    const result = await client.fetch(query, { slug });
+    console.log("Doctor result:", result ? "Found doctor" : "No doctor found");
+    
+    return result;
+  } catch (error) {
+    console.error(`Error fetching doctor with slug ${slug}:`, error);
+    throw error;
+  }
 }
 
 // Blog related queries

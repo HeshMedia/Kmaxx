@@ -11,14 +11,19 @@ import { PortableText } from "@portabletext/react";
 export default function DoctorPage({ params }: { params: { slug: string } }) {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadDoctor() {
       try {
+        console.log(`Fetching doctor with slug: ${params.slug}...`);
         const data = await getDoctorBySlug(params.slug);
+        console.log("Doctor data received:", data ? "Found" : "Not found");
         setDoctor(data);
+        setError(null);
       } catch (error) {
         console.error("Failed to fetch doctor:", error);
+        setError(`Error fetching doctor: ${error instanceof Error ? error.message : String(error)}`);
       } finally {
         setLoading(false);
       }
@@ -31,6 +36,18 @@ export default function DoctorPage({ params }: { params: { slug: string } }) {
     return (
       <div className="bg-[#fffaf3] min-h-screen flex items-center justify-center">
         <p>Loading doctor details...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-[#fffaf3] min-h-screen flex flex-col items-center justify-center p-4">
+        <h2 className="text-xl font-bold text-red-500 mb-4">Error Loading Doctor</h2>
+        <p className="text-gray-800 mb-4">{error}</p>
+        <Link href="/doctors" className="text-orange-500 hover:underline">
+          ← Back to Doctors
+        </Link>
       </div>
     );
   }
