@@ -13,14 +13,19 @@ export function Doctors() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadDoctors() {
       try {
+        console.log("Home component: Loading doctors...");
         const data = await getDoctors();
-        setDoctors(data);
+        console.log("Home component: Doctors loaded:", data ? `${data.length} doctors found` : "No doctors found");
+        setDoctors(data || []);
+        setError(null);
       } catch (error) {
         console.error("Failed to fetch doctors:", error);
+        setError(String(error));
       } finally {
         setLoading(false);
       }
@@ -52,6 +57,12 @@ export function Doctors() {
         <div className="relative">
           {loading ? (
             <div className="text-center py-12">Loading doctors...</div>
+          ) : error ? (
+            <div className="text-center text-red-500 py-12">
+              Error loading doctors: {error}
+            </div>
+          ) : doctors.length === 0 ? (
+            <div className="text-center py-12">No doctors found</div>
           ) : (
             <>
               {/* Scrollable Row */}
@@ -62,7 +73,7 @@ export function Doctors() {
                 {doctors.map((doctor, index) => (
                   <Link
                     key={index}
-                    href={`/our-doctors/${doctor.slug}`}
+                    href={`/doctors/${doctor.slug}`}
                     className="min-w-[280px] max-w-[280px] bg-white rounded-2xl shadow-lg p-4 flex-shrink-0"
                   >
                     <Image
