@@ -11,17 +11,11 @@ export default function OurDoctorsPage() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [debugMode, setDebugMode] = useState(false);
   
   useEffect(() => {
     async function loadDoctors() {
       try {
-        console.log("Starting to load doctors...");
         const data = await getDoctors();
-        console.log("Doctors data received:", data ? `${data.length} doctors` : "No data");
-        if (data) {
-          console.log("First doctor data:", JSON.stringify(data[0]).substring(0, 200) + "...");
-        }
         setDoctors(data || []);
         setError(null);
       } catch (error) {
@@ -44,37 +38,12 @@ export default function OurDoctorsPage() {
           <span className="text-orange-500">DOCTORS</span>
         </h1>
 
-        {/* Debug toggle */}
-        <div className="text-center mb-4">
-          <button 
-            onClick={() => setDebugMode(!debugMode)}
-            className="px-4 py-2 bg-gray-200 rounded text-sm"
-          >
-            {debugMode ? "Hide Debug Info" : "Show Debug Info"}
-          </button>
-        </div>
-
-        {/* Debug information */}
-        {debugMode && (
-          <div className="text-xs bg-gray-100 p-4 mb-8 overflow-auto max-h-60 rounded">
-            <p className="font-bold mb-2">Debug Information:</p>
-            <p>Doctors Count: {doctors.length}</p>
-            <p>Loading: {loading ? "Yes" : "No"}</p>
-            <p>Error: {error || "None"}</p>
-            <div className="mt-2">
-              <p className="font-bold">Raw Doctor Data:</p>
-              <pre>{JSON.stringify(doctors, null, 2)}</pre>
-            </div>
-          </div>
-        )}
-
         {loading ? (
           <div className="text-center">Loading doctors...</div>
         ) : error ? (
           <div className="text-center text-red-500 p-4 max-w-2xl mx-auto">
             <p className="font-bold mb-2">There was an error loading doctors:</p>
             <p className="mb-4">{error}</p>
-            <p className="italic text-sm">This error is only visible in development mode.</p>
           </div>
         ) : doctors.length === 0 ? (
           <div className="text-center text-amber-700 p-4">

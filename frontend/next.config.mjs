@@ -18,12 +18,6 @@ const nextConfig = {
       }
     ],
   },
-  // Configure Logging in production for debugging
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
 };
 
 export default nextConfig;

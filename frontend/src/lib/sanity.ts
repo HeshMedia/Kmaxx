@@ -10,43 +10,27 @@ export const client = createClient({
   useCdn: sanityConfig.useCdn,
   // Don't use stega in server components to reduce payload size
   stega: false,
+  // Add token if available in environment (for preview mode or private datasets)
+  token: process.env.SANITY_API_TOKEN,
+  // Ensure consistent handling between environments
+  perspective: 'published',
 })
 
 // Make queries to fetch content data
 export async function getDoctors() {
-  console.log("Fetching doctors...");
-  try {
-    console.log("Sanity config:", JSON.stringify({
-      projectId: sanityConfig.projectId,
-      dataset: sanityConfig.dataset,
-      apiVersion: sanityConfig.apiVersion,
-    }));
-    
-    const query = `*[_type == "doctors"] | order(order asc) {
-      _id,
-      name,
-      "slug": slug.current,
-      "image": image.asset->url,
-      role,
-      description,
-      order
-    }`;
-    
-    console.log("Doctor query:", query);
-    const result = await client.fetch(query);
-    console.log("Doctors fetch result:", JSON.stringify(result).substring(0, 200) + "...");
-    console.log("Number of doctors found:", result ? result.length : 0);
-    
-    return result;
-  } catch (error) {
-    console.error("Error fetching doctors:", error);
-    throw error; // Re-throw to make the error visible in the UI
-  }
+  return client.fetch(`*[_type == "doctors"] | order(order asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    "image": image.asset->url,
+    role,
+    description,
+    order
+  }`)
 }
 
 // Department queries
 export async function getDepartments() {
-  console.log("Fetching departments...")
   try {
     const result = await client.fetch(`*[_type == "department"] | order(order asc) {
       _id,
@@ -55,7 +39,6 @@ export async function getDepartments() {
       iconName,
       order
     }`)
-    console.log("Departments result:", result)
     return result || []
   } catch (error) {
     console.error("Error fetching departments:", error)
@@ -64,14 +47,12 @@ export async function getDepartments() {
 }
 
 export async function getNavbarDepartments() {
-  console.log("Fetching navbar departments...")
   try {
     const result = await client.fetch(`*[_type == "department" && (showInNavbar == true || showInNavbar == null)] | order(order asc) {
       _id,
       name,
       "slug": slug.current
     }`)
-    console.log("Navbar departments result:", result)
     return result || []
   } catch (error) {
     console.error("Error fetching navbar departments:", error)
@@ -102,7 +83,6 @@ export async function getDepartmentBySlug(slug: string) {
         order
       }
     }`, { slug })
-    console.log("Department by slug result:", result)
     return result
   } catch (error) {
     console.error(`Error fetching department with slug ${slug}:`, error)
@@ -112,7 +92,6 @@ export async function getDepartmentBySlug(slug: string) {
 
 // Hero section query
 export async function getHero() {
-  console.log("Fetching hero data...")
   try {
     const result = await client.fetch(`*[_type == "hero"][0] {
       heading,
@@ -121,7 +100,6 @@ export async function getHero() {
       "mainImage": mainImage.asset->url,
       buttonText
     }`)
-    console.log("Hero result:", result)
     return result
   } catch (error) {
     console.error("Error fetching hero data:", error)
@@ -131,13 +109,11 @@ export async function getHero() {
 
 // Home About section query
 export async function getHomeAbout() {
-  console.log("Fetching home about data...")
   try {
     const result = await client.fetch(`*[_type == "homeAbout"][0] {
       title,
       description
     }`)
-    console.log("Home about result:", result)
     return result
   } catch (error) {
     console.error("Error fetching home about data:", error)
@@ -163,28 +139,14 @@ export async function getAboutPage() {
 }
 
 export async function getDoctorBySlug(slug: string) {
-  console.log(`Fetching doctor with slug: ${slug}...`);
-  try {
-    const query = `*[_type == "doctors" && slug.current == $slug][0] {
-      name,
-      "slug": slug.current,
-      "image": image.asset->url,
-      role,
-      description,
-      bio
-    }`;
-    
-    console.log("Doctor by slug query:", query);
-    console.log("Query parameters:", { slug });
-    
-    const result = await client.fetch(query, { slug });
-    console.log("Doctor result:", result ? "Found doctor" : "No doctor found");
-    
-    return result;
-  } catch (error) {
-    console.error(`Error fetching doctor with slug ${slug}:`, error);
-    throw error;
-  }
+  return client.fetch(`*[_type == "doctors" && slug.current == $slug][0] {
+    name,
+    "slug": slug.current,
+    "image": image.asset->url,
+    role,
+    description,
+    bio
+  }`, { slug })
 }
 
 // Blog related queries
@@ -214,7 +176,6 @@ export async function getBlogBySlug(slug: string) {
 
 // Gallery related queries
 export async function getGalleryItems() {
-  console.log("Fetching gallery items...");
   const result = await client.fetch(`
     *[_type == "gallery"] | order(order asc) {
       _id,
@@ -224,7 +185,6 @@ export async function getGalleryItems() {
       "imageUrl": image.asset->url
     }
   `);
-  console.log("Gallery API response:", result);
   
   // Ensure we have a valid array even if only one item is returned
   const items = Array.isArray(result) ? result : result ? [result] : [];
@@ -240,7 +200,6 @@ export async function getGalleryItems() {
 
 // News related queries
 export async function getNewsItems() {
-  console.log("Fetching news items...");
   const result = await client.fetch(`
     *[_type == "news"] | order(order asc) {
       _id,
@@ -250,7 +209,6 @@ export async function getNewsItems() {
       "imageUrl": image.asset->url
     }
   `);
-  console.log("News API response:", result);
   
   // Ensure we have a valid array even if only one item is returned
   const items = Array.isArray(result) ? result : result ? [result] : [];

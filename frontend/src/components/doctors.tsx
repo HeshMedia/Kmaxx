@@ -18,9 +18,7 @@ export function Doctors() {
   useEffect(() => {
     async function loadDoctors() {
       try {
-        console.log("Home component: Loading doctors...");
         const data = await getDoctors();
-        console.log("Home component: Doctors loaded:", data ? `${data.length} doctors found` : "No doctors found");
         setDoctors(data || []);
         setError(null);
       } catch (error) {
