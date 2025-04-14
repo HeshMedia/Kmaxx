@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 export function Contact() {
   return (
     <section id="contact"
-      className="relative py-20 px-6 bg-white overflow-hidden flex justify-center items-center"
+      className="relative py-20 px-6 bg-white overflow-hidden flex flex-col justify-center items-center"
       style={{
         backgroundImage: "url('/static/images/back.png')",
         backgroundSize: "cover",
@@ -21,8 +21,7 @@ export function Contact() {
           <div className="w-full md:w-1/2 order-1 md:order-2">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#6B87E8] mb-6 sm:mb-8">CONTACT US</h2>
             <p className="text-base sm:text-lg mb-10 max-w-md">
-              Contact us for questions, technical assistance, or collaboration opportunities via the contact information
-              provided.
+              For inquiries, appointments, or assistance, please reach out to us using the contact details provided.
             </p>
             <div className="space-y-8">
               <div className="flex items-center gap-4">
@@ -35,13 +34,22 @@ export function Contact() {
                 <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
                   <Mail className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-base sm:text-lg">helpdesk@kmaxx.in</span>
+                <a href="mailto:helpdesk@kmaxx.in" className="text-base sm:text-lg hover:text-[#FF9B62] transition-colors">
+                  helpdesk@kmaxx.in
+                </a>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-[#FF9B62] flex items-center justify-center">
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-base sm:text-lg">355 Mall Road, Amritsar</span>
+                <a 
+                  href="https://maps.app.goo.gl/ekdzwSPh8vsSuwAy9" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-base sm:text-lg hover:text-[#FF9B62] transition-colors"
+                >
+                  355 Mall Road, Amritsar
+                </a>
               </div>
             </div>
           </div>
@@ -78,6 +86,23 @@ export function Contact() {
               <Button className="bg-[#FF9B62] hover:bg-[#ff8a47] w-32">SUBMIT</Button>
             </form>
           </div>
+        </div>
+      </div>
+
+      {/* Google Maps */}
+      <div className="w-full mt-16 max-w-5xl">
+        <div className="rounded-lg overflow-hidden shadow-xl">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3396.703399052806!2d74.87011337589158!3d31.64197037415859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391964a7a109e319%3A0xe04f4da93606ba72!2sKmaxx%20American%20Hospital%20-%20Dr%20Ved%20Gupta%20Campus!5e0!3m2!1sen!2sin!4v1744632718555!5m2!1sen!2sin" 
+            width="100%" 
+            height="450" 
+            style={{ border: 0 }} 
+            allowFullScreen={true} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Kmaxx American Hospital Location"
+            className="w-full"
+          ></iframe>
         </div>
       </div>
 
