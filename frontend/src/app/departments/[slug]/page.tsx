@@ -125,7 +125,7 @@ export default async function DepartmentPage({
 function DoctorCard({ doctor }: { doctor: any }) {
   return (
     <Link 
-      href={`/our-doctors/${doctor.slug}`}
+      href={`/doctors/${doctor.slug}`}
       className="bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col items-center p-6 hover:shadow-xl transition-shadow duration-300 w-full max-w-sm"
     >
       <div className="w-40 h-40 relative rounded-xl overflow-hidden flex-shrink-0 mb-4">
