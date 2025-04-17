@@ -1,5 +1,7 @@
 import React from "react";
 import { getHomeAbout } from "@/lib/sanity";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface HomeAboutProps {
   title?: string;
@@ -32,6 +34,9 @@ const AboutUs = async () => {
             <p className="mt-4 text-base sm:text-lg">
               {content.description}
             </p>
+            <Button asChild className="mt-4 bg-[#476cf3] hover:bg-[#5a74d4] text-white">
+              <Link href="/about-us">Read More</Link>
+            </Button>
           </div>
         </div>
 
