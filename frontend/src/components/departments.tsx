@@ -79,9 +79,11 @@ export function Departments({ departmentData }: DepartmentsProps) {
           })}
         </div>
         <div className="flex justify-center mt-8 md:mt-12">
+          <Link href={"/departments"}>
           <Button className="bg-[#6B87E8] hover:bg-[#5a74d4] px-6 py-4 text-sm md:text-base md:px-8">
             VIEW ALL
           </Button>
+          </Link>
         </div>
       </div>
     </section>

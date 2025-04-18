@@ -55,30 +55,29 @@ export default async function DepartmentsPage() {
 
   return (
     <>
-      {/* Banner */}
-      <div className="relative bg-[#FFD0B4] h-48 md:h-56 flex items-center justify-center overflow-hidden">
-        {/* Hex pattern top-left */}
-        <Image
-          src="/static/images/hex-left.png"
-          alt="Hex pattern top left"
-          width={220}
-          height={220}
-          className="absolute top-0 left-0 object-contain opacity-70 -translate-x-8 -translate-y-8"
-        />
-
-        {/* Hex pattern bottom-right */}
-        <Image
-          src="/static/images/hex-right .png"
-          alt="Hex pattern bottom right"
-          width={220}
-          height={220}
-          className="absolute bottom-0 right-0 object-contain opacity-70 translate-x-8 translate-y-8"
-        />
-
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
-          Our Specialized Departments
-        </h1>
-      </div>
+        <div className="relative bg-[#FFD0B4] h-48 md:h-56 flex items-center justify-center overflow-hidden">
+            {/* Hex pattern top-left */}
+            <Image
+              src="/static/images/hex-left.png"
+              alt="Hex pattern top left"
+              width={220}
+              height={220}
+              className="absolute top-0 left-0 object-contain opacity-70 -translate-x-8 -translate-y-8"
+            />
+    
+            {/* Hex pattern bottom-right */}
+            <Image
+              src="/static/images/hex-right .png"
+              alt="Hex pattern bottom right"
+              width={220}
+              height={220}
+              className="absolute bottom-0 right-0 object-contain opacity-70 translate-x-8 translate-y-8"
+            />
+    
+            <h1 className="text-2xl md:text-4xl font-bold uppercase text-black z-10">
+             Our Specialzed Departments
+            </h1>
+          </div>
 
       {/* Departments Grid Section */}
       <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6">

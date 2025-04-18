@@ -14,6 +14,8 @@ export function Doctors() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     async function loadDoctors() {
@@ -32,23 +34,50 @@ export function Doctors() {
     loadDoctors();
   }, []);
 
+  useEffect(() => {
+    // Check if we're on mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add event listener for resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const scrollLeft = () => {
-    if (scrollRef.current) {
+    if (isMobile) {
+      // For mobile, go to previous card
+      setCurrentIndex(prevIndex => 
+        prevIndex > 0 ? prevIndex - 1 : doctors.length - 1
+      );
+    } else if (scrollRef.current) {
+      // For desktop, scroll left
       scrollRef.current.scrollBy({ left: -320, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
-    if (scrollRef.current) {
+    if (isMobile) {
+      // For mobile, go to next card
+      setCurrentIndex(prevIndex => 
+        prevIndex < doctors.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (scrollRef.current) {
+      // For desktop, scroll right
       scrollRef.current.scrollBy({ left: 320, behavior: "smooth" });
     }
   };
 
   return (
-    <section
-      className="py-20 px-6 bg-[#fdf9f3]"    >
+    <section className="py-20 px-6 bg-[#fdf9f3]">
       <div className="container mx-auto">
-        <h2 className="text-5xl font-bold mb-16">
+        <h2 className="text-5xl font-bold mb-16 md:text-5xl text-3xl text-center md:text-left">
           THE TEAM OF <span className="text-[#FF9B62]">DOCTORS</span>
         </h2>
 
@@ -63,47 +92,94 @@ export function Doctors() {
             <div className="text-center py-12">No doctors found</div>
           ) : (
             <>
-              {/* Scrollable Row */}
-              <div
-                ref={scrollRef}
-                className="flex gap-6 no-scrollbar scroll-smooth overflow-x-auto pb-9"
-              >
-                {doctors.map((doctor, index) => (
+              {/* Mobile View - Single Card */}
+              {isMobile && doctors.length > 0 && (
+                <div className="flex justify-center items-center py-4">
                   <Link
-                    key={index}
-                    href={`/doctors/${doctor.slug}`}
-                    className="min-w-[280px] max-w-[280px] bg-white rounded-2xl shadow-lg p-4 flex-shrink-0"
+                    href={`/doctors/${doctors[currentIndex]?.slug}`}
+                    className="min-w-[280px] max-w-[280px] bg-white rounded-2xl shadow-lg p-4 mx-auto"
                   >
                     <Image
-                      src={doctor.image || "/static/images/placeholder-doctor.jpg"}
-                      alt={doctor.name}
+                      src={doctors[currentIndex]?.image || "/static/images/placeholder-doctor.jpg"}
+                      alt={doctors[currentIndex]?.name}
                       width={280}
                       height={280}
                       className="w-full h-64 object-cover rounded-lg mb-4"
                     />
-                    <h3 className="text-lg font-bold mb-1">{doctor.name}</h3>
+                    <h3 className="text-lg font-bold mb-1">{doctors[currentIndex]?.name}</h3>
                     <p className="text-sm italic text-gray-600 mb-1">
-                      {doctor.role}
+                      {doctors[currentIndex]?.role}
                     </p>
                     <div className="text-sm text-gray-500 line-clamp-3">
-                      {doctor.description && typeof doctor.description === 'object' && (
-                        <PortableText value={doctor.description} />
+                      {doctors[currentIndex]?.description && typeof doctors[currentIndex]?.description === 'object' && (
+                        <PortableText value={doctors[currentIndex]?.description} />
                       )}
                     </div>
                   </Link>
-                ))}
-              </div>
+                </div>
+              )}
+
+              {/* Desktop View - Scrollable Row */}
+              {!isMobile && (
+                <div
+                  ref={scrollRef}
+                  className="flex gap-6 no-scrollbar scroll-smooth overflow-x-auto pb-9"
+                >
+                  {doctors.map((doctor, index) => (
+                    <Link
+                      key={index}
+                      href={`/doctors/${doctor.slug}`}
+                      className="min-w-[280px] max-w-[280px] bg-white rounded-2xl shadow-lg p-4 flex-shrink-0"
+                    >
+                      <Image
+                        src={doctor.image || "/static/images/placeholder-doctor.jpg"}
+                        alt={doctor.name}
+                        width={280}
+                        height={280}
+                        className="w-full h-64 object-cover rounded-lg mb-4"
+                      />
+                      <h3 className="text-lg font-bold mb-1">{doctor.name}</h3>
+                      <p className="text-sm italic text-gray-600 mb-1">
+                        {doctor.role}
+                      </p>
+                      <div className="text-sm text-gray-500 line-clamp-3">
+                        {doctor.description && typeof doctor.description === 'object' && (
+                          <PortableText value={doctor.description} />
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {/* Mobile Indicators */}
+              {isMobile && doctors.length > 1 && (
+                <div className="flex justify-center gap-2 mt-4 mb-6">
+                  {doctors.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentIndex ? "bg-[#FF9B62] w-4" : "bg-gray-300"
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* Navigation Buttons */}
               <button
                 onClick={scrollLeft}
                 className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10"
+                aria-label="Previous doctor"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
               <button
                 onClick={scrollRight}
                 className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-10"
+                aria-label="Next doctor"
               >
                 <ChevronRight className="h-6 w-6" />
               </button>
