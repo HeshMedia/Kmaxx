@@ -77,7 +77,7 @@ export function Doctors() {
   return (
     <section className="py-20 px-6 bg-[#fdf9f3]">
       <div className="container mx-auto">
-        <h2 className="text-5xl font-bold mb-16 md:text-5xl text-3xl text-center md:text-left">
+        <h2 className=" font-bold mb-16 md:text-5xl text-3xl text-center md:text-left">
           THE TEAM OF <span className="text-[#FF9B62]">DOCTORS</span>
         </h2>
 
