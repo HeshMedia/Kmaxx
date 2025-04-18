@@ -85,12 +85,14 @@ export default function DoctorPage({ params }: { params: { slug: string } }) {
               </div>
             )}
 
-            <button className="mt-6 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-full shadow hover:bg-indigo-600 transition">
-              BOOK APPOINTMENT
-            </button>
+            <Link href="/contact">
+              <button className="mt-6 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-full shadow hover:bg-indigo-600 transition">
+                BOOK APPOINTMENT
+              </button>
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
-} 
+}

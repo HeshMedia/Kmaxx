@@ -40,21 +40,27 @@ function Gallery({
     console.log(`Gallery display items (${displayItems.length}):`, displayItems);
     
     return (
-        <div className="rounded-md w-fit mx-auto md:gap-2 gap-1 flex pb-20 pt-10">
+        <div className="rounded-md w-fit mx-auto md:gap-2 gap-1 flex pb-20 pt-10 overflow-x-auto max-w-[100vw] px-4">
             {displayItems.map((item, i) => (
                 <motion.div
                     key={item._id}
                     whileTap={{ scale: 0.95 }}
                     className={`rounded-2xl ${
                         index === i
-                            ? "w-[250px]"
+                            ? "w-[250px] sm:w-[250px]"
                             : "xl:w-[50px] md:w-[30px] sm:w-[20px] w-[14px]"
-                    } h-[200px] flex-shrink-0 overflow-hidden transition-[width] ease-in-out duration-300`}
+                    } h-[200px] sm:h-[200px] h-[150px] flex-shrink-0 overflow-hidden transition-[width] ease-in-out duration-300`}
                     onMouseEnter={() => setIndex(i)}
                     onMouseLeave={() => setIndex(i)}
-                    onClick={() => {
+                    onTouchStart={(e) => {
+                        // Set index immediately on touch to fix first tap issue
                         setIndex(i);
-                        setOpen(true);
+                    }}
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent event bubbling
+                        setIndex(i);
+                        // Small delay to ensure index is set before opening
+                        setTimeout(() => setOpen(true), 10);
                     }}
                     layoutId={item._id}
                 >
@@ -132,7 +138,7 @@ export default function GalleryComponent({ items = [] }: { items?: GalleryItem[]
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         key="overlay"
-                        className="dark:bg-black/40 bg-white/40 backdrop-blur-sm fixed inset-0 z-50 top-0 left-0 bottom-0 right-0 w-full h-full grid place-content-center"
+                        className="dark:bg-black/40 bg-white/40 backdrop-blur-sm fixed inset-0 z-50 top-0 left-0 bottom-0 right-0 w-full h-full grid place-content-center p-4"
                         onClick={() => {
                             setOpen(false)
                         }}
@@ -140,9 +146,9 @@ export default function GalleryComponent({ items = [] }: { items?: GalleryItem[]
                         <div onClick={(e) => e.stopPropagation()}>
                             <motion.div
                                 layoutId={safeItems[index]._id}
-                                className="w-[400px] h-[400px] rounded-2xl cursor-default"
+                                className="w-full max-w-[400px] max-h-[90vh] rounded-2xl cursor-default"
                             >
-                                <div className="relative w-full h-full">
+                                <div className="relative w-full aspect-square max-h-[70vh]">
                                     <img
                                         src={safeItems[index].image}
                                         alt={safeItems[index].title}
@@ -159,7 +165,7 @@ export default function GalleryComponent({ items = [] }: { items?: GalleryItem[]
                                         animate={{ scaleY: 1 }}
                                         exit={{ scaleY: 0.2 }}
                                         transition={{ duration: 0.2, delay: 0.2 }}
-                                        className="text-xl font-semibold"
+                                        className="text-xl font-semibold truncate"
                                     >
                                         {safeItems[index].title}
                                     </motion.h1>
@@ -168,7 +174,7 @@ export default function GalleryComponent({ items = [] }: { items?: GalleryItem[]
                                         animate={{ y: 0, opacity: 1 }}
                                         exit={{ scaleY: -10, opacity: 0 }}
                                         transition={{ duration: 0.2, delay: 0.2 }}
-                                        className="text-sm leading-[100%] py-2"
+                                        className="text-sm leading-[140%] py-2 max-h-[100px] overflow-y-auto"
                                     >
                                         {safeItems[index].description}
                                     </motion.p>

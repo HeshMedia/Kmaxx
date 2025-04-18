@@ -63,7 +63,7 @@ export default function index() {
     };
   }, [open]);
   return (
-    <div className='relative'>
+    <div className='relative '>
       <Gallery
         items={items}
         index={index}

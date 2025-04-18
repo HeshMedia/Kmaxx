@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import Image from "next/image";
 import { getAboutPage } from "@/lib/sanity";
+import Link from "next/link";
 
 // Define the types for the Sanity data
 interface AboutPageData {
@@ -87,9 +88,11 @@ export default async function AboutUsPage() {
         </div>
 
         <div className="text-center mt-16">
-          <button className="px-8 py-4 bg-indigo-600 text-white text-lg font-semibold rounded-full shadow hover:bg-indigo-700 transition">
-            BOOK APPOINTMENT
-          </button>
+          <Link href="/contact">
+            <button className="px-8 py-4 bg-indigo-600 text-white text-lg font-semibold rounded-full shadow hover:bg-indigo-700 transition">
+              BOOK APPOINTMENT
+            </button>
+          </Link>
         </div>
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
